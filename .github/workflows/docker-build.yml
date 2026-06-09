@@ -1,0 +1,20 @@
+name: Docker Image Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Docker Image
+        run: docker pull homeassistant/home-assistant:latest
+
+      - name: Save Docker Image
+        run: docker save -o home-assistant.tar homeassistant/home-assistant:latest
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: homeassistant-image
+          path: home-assistant.tar
